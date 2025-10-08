@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Karl Obfuscator Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="pobf.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">⚡</div>
+            <div class="loading-text">Advanced Karl Obfuscator Pro</div>
+            <div class="loading-spinner"></div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="https://t.me/shadekarl" class="navbar-brand">
+                <i class="fas fa-bolt"></i>
+                <span>Karl Obfuscator</span>
+            </a>
+            
+            <div class="navbar-content">
+                <div class="welcome-message" id="welcomeMessage">
+                    Welcome back, <span id="navbarUsername"></span>!
+                </div>
+                
+                <div class="auth-buttons" id="authButtons">
+                    <button class="auth-btn secondary" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <button class="auth-btn primary" id="registerBtn">
+                        <i class="fas fa-user-plus"></i> Register
+                    </button>
+                </div>
+                
+                <div class="profile-container" id="profileContainer">
+                    <button class="profile-button" id="profileButton">
+                        <div id="profileInitial">U</div>
+                    </button>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="profile-dropdown-header">
+                            <div class="profile-dropdown-avatar" id="profileDropdownAvatar">
+                                <div id="profileDropdownInitial">U</div>
+                            </div>
+                            <div class="profile-dropdown-info">
+                                <h4 id="profileDropdownName">Username</h4>
+                                <p id="profileDropdownEmail">user@example.com</p>
+                            </div>
+                        </div>
+                        <div class="profile-dropdown-menu">
+                            <button class="profile-dropdown-item" id="editProfileBtn">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </button>
+                            <button class="profile-dropdown-item danger" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Login to Your Account</h2>
+                <button class="modal-close" id="loginModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-error-message" id="loginFormError">
+                    <i class="fas fa-exclamation-circle"></i>
+                    Invalid email or password. Please try again.
+                </div>
+                
+                <form class="auth-form" id="loginForm">
+                    <div class="auth-form-group">
+                        <label class="auth-form-label" for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" class="auth-form-input" placeholder="Enter your email" required>
+                        <div class="auth-form-error" id="loginEmailError">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Please enter a valid email address
+                        </div>
+                    </div>
+                    
+                    <div class="auth-form-group">
+                        <label class="auth-form-label" for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" class="auth-form-input" placeholder="Enter your password" required>
+                        <div class="auth-form-error" id="loginPasswordError">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Password must be at least 6 characters
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="auth-form-submit">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </form>
+                
+                <div class="auth-form-footer">
+                    <p>Don't have an account? <a href="#" class="auth-form-link" id="showRegisterModal">Register here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Create New Account</h2>
+                <button class="modal-close" id="registerModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-error-message" id="registerFormError">
+                    <i class="fas fa-exclamation-circle"></i>
+                    Email already exists. Please use a different email.
+                </div>
+                
+                <form class="auth-form" id="registerForm">
+                    <div class="auth-form-group">
+                        <label class="auth-form-label" for="registerUsername">Username</label>
+                        <input type="text" id="registerUsername" class="auth-form-input" placeholder="Choose a username" required>
+                        <div class="auth-form-error" id="registerUsernameError">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Username must be at least 3 characters
+                        </div>
+                    </div>
+                    
+                    <div class="auth-form-group">
+                        <label class="auth-form-label" for="registerEmail">Email Address</label>
+                        <input type="email" id="registerEmail" class="auth-form-input" placeholder="Enter your email" required>
+                        <div class="auth-form-error" id="registerEmailError">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Please enter a valid email address
+                        </div>
+                    </div>
+                    
+                    <div class="auth-form-group">
+                        <label class="auth-form-label" for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" class="auth-form-input" placeholder="Create a password" required>
+                        <div class="auth-form-error" id="registerPasswordError">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Password must be at least 6 characters
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="auth-form-submit">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </form>
+                
+                <div class="auth-form-footer">
+                    <p>Already have an account? <a href="#" class="auth-form-link" id="showLoginModal">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Profile</h2>
+                <button class="modal-close" id="editProfileModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="auth-form" id="editProfileForm">
+                    <div class="avatar-upload">
+                        <div class="avatar-preview" id="avatarPreview">
+                            <div id="avatarPreviewInitial">U</div>
+                        </div>
+                        <div class="avatar-upload-text">Click to change profile picture</div>
+                        <input type="file" id="avatarInput" class="avatar-input" accept="image/*">
+                    </div>
+                    
+                    <div class="auth-form-group">
+                        <label class="auth-form-label" for="editUsername">Username</label>
+                        <input type="text" id="editUsername" class="auth-form-input" placeholder="Enter new username" required>
+                        <div class="auth-form-error" id="editUsernameError">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Username must be at least 3 characters
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="auth-form-submit">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Particles Container -->
+    <div class="particles-container" id="particlesContainer"></div>
+
+    <div class="bg-animation"></div>
+    <div class="bg-grid"></div>
+    
+    <!-- Hidden input for fallback copy -->
+    <input type="text" class="hidden-input" id="hiddenInput" readonly>
+    
+    <div class="header">
+        <h1>⚡ Advanced Painzy Obfuscator Pro</h1>
+        <p>Professional JavaScript code protection with multiple encoding options</p>
+    </div>
+
+    <div class="container">
+        <!-- Instructions Section -->
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> Cara Penggunaan</h3>
+            <ol class="instruction-steps">
+                <li><span class="instruction-highlight">Login atau Register</span> terlebih dahulu untuk menggunakan fitur obfuscator</li>
+                <li>Upload file JavaScript Anda langsung atau masukkan <span class="instruction-highlight">URL file JavaScript</span></li>
+                <li>Pilih <span class="instruction-highlight">metode encoding</span> yang diinginkan (Invisible, Nagisa, Custom, atau Hiura)</li>
+                <li>Jika memilih Custom, masukkan <span class="instruction-highlight">nama file custom</span> yang diinginkan</li>
+                <li>Klik tombol <span class="instruction-highlight">"Obfuscate Code"</span> untuk memulai proses enkripsi</li>
+                <li>Download file hasil obfuscation yang telah dienkripsi</li>
+            </ol>
+        </div>
+
+        <div class="main-content">
+            <!-- Input Section -->
+            <div class="input-section">
+                <h2 class="section-title">
+                    <i class="fas fa-cogs"></i> Configuration
+                </h2>
+                
+                <!-- Login Required Overlay -->
+                <div class="login-required-overlay" id="loginRequiredOverlay">
+                    <div class="login-required-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="login-required-title">Login Required</h3>
+                    <p class="login-required-text">
+                        You need to login or create an account to use the obfuscator tool.
+                        <br>Join thousands of developers protecting their code!
+                    </p>
+                    <div class="login-required-buttons">
+                        <button class="login-required-btn primary" id="loginRequiredLogin">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                        <button class="login-required-btn secondary" id="loginRequiredRegister">
+                            <i class="fas fa-user-plus"></i> Register
+                        </button>
+                    </div>
+                </div>
+                
+                <form id="obfuscatorForm">
+                    <!-- File Upload Section -->
+                    <div class="form-group">
+                        <label class="form-label">Upload JavaScript File</label>
+                        <div class="file-upload-container">
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <input type="file" id="fileUploadInput" class="file-upload-input" accept=".js,.txt" disabled>
+                                <div class="file-upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="file-upload-text">Click to upload or drag & drop</div>
+                                <div class="file-upload-hint">JavaScript files only (.js, .txt) - Max 5MB</div>
+                                <div class="file-upload-hint" style="margin-top: 5px; font-size: 0.75rem; opacity: 0.7;">
+                                    If upload fails, you can manually paste your file to 
+                                    <a href="https://catbox.moe" target="_blank" style="color: var(--text-primary);">catbox.moe</a> 
+                                    or <a href="https://pastebin.com" target="_blank" style="color: var(--text-primary);">pastebin.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="file-preview" id="filePreview">
+                                <div class="file-preview-info">
+                                    <div class="file-preview-icon">
+                                        <i class="fas fa-file-code"></i>
+                                    </div>
+                                    <div class="file-preview-details">
+                                        <div class="file-preview-name" id="filePreviewName"></div>
+                                        <div class="file-preview-size" id="filePreviewSize"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="file-preview-remove" id="filePreviewRemove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="file-upload-progress" id="fileUploadProgress">
+                                <div class="file-upload-progress-text">
+                                    <span>Uploading to file hosting...</span>
+                                    <span id="uploadProgressPercent">0%</span>
+                                </div>
+                                <div class="file-upload-progress-bar-container">
+                                    <div class="file-upload-progress-bar" id="uploadProgressBar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="or-divider">OR</div>
+
+                    <div class="form-group">
+                        <label class="form-label">JavaScript File URL</label>
+                        <input type="url" id="fileUrl" class="form-input" placeholder="https://files.catbox.moe/example.js" disabled>
+                        <div class="error-message" id="urlError" style="display: none;">
+                            <i class="fas fa-exclamation-circle"></i> Please enter a valid JavaScript file URL
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Output File Name</label>
+                        <input type="text" id="outputFileName" class="form-input" placeholder="obfuscated-script" value="obfuscated" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Encoding Type</label>
+                        <div class="category-grid">
+                            <div class="category-option">
+                                <input type="radio" id="invis" name="category" value="invis" class="category-radio" checked disabled>
+                                <label for="invis" class="category-label disabled">
+                                    <div class="category-icon"><i class="fas fa-ghost"></i></div>
+                                    Invisible
+                                    <div class="category-description">Advanced steganography</div>
+                                </label>
+                            </div>
+                            <div class="category-option">
+                                <input type="radio" id="nagisa" name="category" value="nagisa" class="category-radio" disabled>
+                                <label for="nagisa" class="category-label disabled">
+                                    <div class="category-icon"><i class="fas fa-shield-alt"></i></div>
+                                    Nagisa
+                                    <div class="category-description">Premium protection</div>
+                                </label>
+                            </div>
+                            <div class="category-option">
+                                <input type="radio" id="custom" name="category" value="custom" class="category-radio" disabled>
+                                <label for="custom" class="category-label disabled">
+                                    <div class="category-icon"><i class="fas fa-edit"></i></div>
+                                    Custom Name
+                                    <div class="category-description">Custom filename output</div>
+                                </label>
+                            </div>
+                            <div class="category-option">
+                                <input type="radio" id="hiura" name="category" value="hiura" class="category-radio" disabled>
+                                <label for="hiura" class="category-label disabled">
+                                    <div class="category-icon"><i class="fas fa-fire"></i></div>
+                                    Hiura
+                                    <div class="category-description">Advanced Gcorcil protection</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Name Field - Hidden by default -->
+                    <div class="form-group hidden" id="customNameGroup">
+                        <label class="form-label">Custom File Name</label>
+                        <input type="text" id="customFileName" class="form-input" placeholder="KinGPainZy" value="" disabled>
+                    </div>
+
+                    <button type="submit" class="process-btn" id="processBtn" disabled>
+                        <i class="fas fa-bolt"></i> Obfuscate Code
+                    </button>
+                </form>
+            </div>
+
+            <!-- Result Section -->
+            <div class="result-section">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-line"></i> Results
+                </h2>
+
+                <div class="result-placeholder" id="resultPlaceholder">
+                    <div class="icon"><i class="fas fa-file-code"></i></div>
+                    <p>Your obfuscated code will appear here</p>
+                    <small>Login and submit your JavaScript file to get started</small>
+                </div>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Processing your code...</div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                </div>
+
+                <div class="result-content" id="resultContent">
+                    <div class="result-item success-state">
+                        <div class="result-label">
+                            <i class="fas fa-check-circle"></i> Obfuscated File
+                        </div>
+                        <div class="result-value" id="resultUrlDisplay"></div>
+                        <div class="result-actions">
+                            <a href="#" id="resultLink" class="result-link" target="_blank">
+                                <i class="fas fa-download"></i> Download File
+                            </a>
+                            <button class="copy-btn tooltip" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy Link
+                                <span class="tooltiptext">Copy download link</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">
+                            <i class="fas fa-lock"></i> Encoding Method
+                        </div>
+                        <div class="result-value" id="encodingType"></div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">
+                            <i class="fas fa-user"></i> Creator
+                        </div>
+                        <div class="result-value" id="creatorInfo"></div>
+                    </div>
+                    
+                    <div class="result-item success-state">
+                        <div class="result-label">
+                            <i class="fas fa-check-circle"></i> Status
+                        </div>
+                        <div class="result-value">Successfully Obfuscated</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Advanced Karl Obfuscator Pro &copy; 2025 | Secure your JavaScript code with professional obfuscation</p>
+    </div>
+
+    <script src="pobf.js"></script>
+</body>
+</html>
